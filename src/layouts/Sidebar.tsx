@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
     Drawer,
     List,
@@ -8,28 +8,38 @@ import {
     ListItemText,
     Divider,
     Typography,
-    Toolbar,
+    Toolbar, IconButton,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useSelector } from "react-redux";
-import { RootState } from "../app/store";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../app/store";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import { ChevronRight } from "@mui/icons-material";
+import {ChevronRight} from "@mui/icons-material";
+import {closeSidebar, selectSidebar} from "@app/features/sidebarSlice.tsx";
+import CloseIcon from "@mui/icons-material/Close";
+import theme from "@styles/theme.ts";
 
 const DrawerWidth = 250;
 
 export default function Sidebar() {
-    // 🔹 Redux에서 menuState 가져오기
+    // menuSlice 컴포넌트 메뉴 리스트
     const menuState = useSelector((state: RootState) => state.menu);
+    const isOpen = useSelector(selectSidebar);
+    const dispatch = useDispatch();
 
     return (
         <Drawer
-            variant="permanent"
+            variant="persistent"
+            open={isOpen}
             sx={{
-                width: DrawerWidth,
+                width: isOpen ? DrawerWidth : 0,
                 flexShrink: 0,
+                transition: theme.transitions.create("width", {
+                    easing: theme.transitions.easing.sharp,
+                    duration: theme.transitions.duration.enteringScreen,
+                }),
                 "& .MuiDrawer-paper": {
                     width: DrawerWidth,
                     boxSizing: "border-box",
@@ -37,9 +47,9 @@ export default function Sidebar() {
                 },
             }}
         >
-            <Toolbar />
+            <Toolbar/>
             {/* 🔹 프로필 영역 */}
-            <ListItem disablePadding sx={{ position: "sticky" }}>
+            <ListItem disablePadding sx={{position: "sticky"}}>
                 <ListItemButton
                     sx={{
                         display: "flex",
@@ -51,7 +61,7 @@ export default function Sidebar() {
                 >
                     {/* 아이콘 */}
                     <ListItemIcon>
-                        <AccountCircleIcon />
+                        <AccountCircleIcon/>
                     </ListItemIcon>
 
                     {/* 텍스트 */}
@@ -69,7 +79,7 @@ export default function Sidebar() {
                     />
                 </ListItemButton>
             </ListItem>
-            <Divider />
+            <Divider/>
 
             {/* 🔹 메뉴 리스트 */}
             <List
@@ -79,7 +89,7 @@ export default function Sidebar() {
                     scrollbarColor: "#e1e1e1 #fff",
                 }}
             >
-                {menuState.menuItems.map(({ text, icon, subList }) => (
+                {menuState.menuItems.map(({text, icon, subList}) => (
                     <ListItem disablePadding key={text}>
                         <Accordion
                             sx={{
@@ -92,16 +102,16 @@ export default function Sidebar() {
                             <AccordionSummary
                                 aria-controls="panel1-content"
                                 id="panel1-header"
-                                sx={{ height: "50px" }}
+                                sx={{height: "50px"}}
                             >
-                                <ListItemIcon sx={{ alignItems: "center" }}>
+                                <ListItemIcon sx={{alignItems: "center"}}>
                                     {icon}
                                 </ListItemIcon>
-                                <ListItemText primary={text} />
+                                <ListItemText primary={text}/>
                             </AccordionSummary>
                             {subList?.length && (
-                                <AccordionDetails sx={{ padding: 0 }}>
-                                    <List sx={{ padding: 0 }}>
+                                <AccordionDetails sx={{padding: 0}}>
+                                    <List sx={{padding: 0}}>
                                         {subList.map((sub) => (
                                             <ListItemButton key={sub.text}>
                                                 <ListItemIcon
@@ -110,9 +120,9 @@ export default function Sidebar() {
                                                         paddingRight: 0,
                                                     }}
                                                 >
-                                                    <ChevronRight />
+                                                    <ChevronRight/>
                                                 </ListItemIcon>
-                                                <ListItemText primary={sub.text} />
+                                                <ListItemText primary={sub.text}/>
                                             </ListItemButton>
                                         ))}
                                     </List>

@@ -1,7 +1,11 @@
-import {AppBar, Box, Button, Toolbar, Typography} from "@mui/material";
+import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import {useDispatch} from "react-redux";
+import {toggleSidebar} from "@app/features/sidebarSlice.tsx";
 
 const Header = () => {
+    const dispatch = useDispatch();
+
     return (
         <AppBar position="fixed"
                 elevation={1}
@@ -19,7 +23,9 @@ const Header = () => {
             >
                 {/*헤더 왼쪽 영역(솔루션명)*/}
                 <Box sx={{display: "flex", alignItems: "center", width: "240px", justifyContent: "space-evenly"}}>
-                    <MenuIcon/>
+                    <IconButton edge="start" color="inherit" onClick={() => dispatch(toggleSidebar())}>
+                        <MenuIcon/>
+                    </IconButton>
                     <Typography variant="h6" noWrap>
                         표준 MES 솔루션
                     </Typography>

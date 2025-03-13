@@ -7,7 +7,7 @@ const Layout = () => {
     return (
         <Box sx={{ display: 'flex' }}>
             {/* 메인 레이아웃 */}
-            <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
+            <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column'}}>
                 {/* 헤더 */}
                 <Header />
 
@@ -16,7 +16,7 @@ const Layout = () => {
                     <Sidebar />
 
                     {/* 메인 콘텐츠 */}
-                    <Box component="main" sx={{ flexGrow:1, p: 3, mt: 8, ml: '240px' }}>
+                    <Box component="main" sx={{ flexGrow:1, p: 3, mt: 8}}>
                         <Outlet />
                     </Box>
                 </Box>

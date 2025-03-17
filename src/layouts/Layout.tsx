@@ -5,17 +5,6 @@ import {Outlet} from "react-router-dom";
 import {useState} from "react";
 
 const Layout = () => {
-    // 사이드바 오픈 여부
-    const [open, setOpen] = useState(true);
-
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
-
     return (
         <Box sx={{display: 'flex'}}>
             {/* 메인 레이아웃 */}
@@ -23,17 +12,13 @@ const Layout = () => {
                 {/* 헤더 */}
                 <Header/>
 
-                <Box sx={{display: 'flex', flexGrow: 1, mt: 8, height: "847px",}}>
+                <Box sx={{display: 'flex', mt: 8, minWidth: "740px", height: "840px"}}>
                     {/* 사이드바 */}
                     <Sidebar/>
 
                     {/* 메인 콘텐츠 */}
                     <Box component="main"
-                         sx={{
-                             flexGrow: 1,
-                             m: 1,
-                             border: "1px solid gray"
-                    }}>
+                         sx={{flexGrow: 1, mx: 1,}}>
                         <Outlet/>
                     </Box>
                 </Box>

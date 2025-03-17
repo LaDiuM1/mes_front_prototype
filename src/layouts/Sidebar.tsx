@@ -1,33 +1,33 @@
-import React, {useState} from "react";
+import React from "react";
 import {
+    Divider,
     Drawer,
     List,
     ListItem,
     ListItemButton,
     ListItemIcon,
     ListItemText,
-    Divider,
+    Toolbar,
     Typography,
-    Toolbar, IconButton,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {RootState} from "../app/store";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import {ChevronRight} from "@mui/icons-material";
-import {closeSidebar, selectSidebar} from "@app/features/sidebarSlice.tsx";
-import CloseIcon from "@mui/icons-material/Close";
+import {selectSidebar} from "@app/features/sidebarSlice.tsx";
 import theme from "@styles/theme.ts";
+import {useNavigate} from "react-router-dom";
 
 const DrawerWidth = 250;
 
 export default function Sidebar() {
+    const navigate = useNavigate()
     // menuSlice 컴포넌트 메뉴 리스트
     const menuState = useSelector((state: RootState) => state.menu);
     const isOpen = useSelector(selectSidebar);
-    const dispatch = useDispatch();
 
     return (
         <Drawer
@@ -81,7 +81,7 @@ export default function Sidebar() {
             </ListItem>
             <Divider/>
 
-            {/* 🔹 메뉴 리스트 */}
+            {/* 메뉴 리스트 */}
             <List
                 sx={{
                     overflowY: "auto",
@@ -113,7 +113,11 @@ export default function Sidebar() {
                                 <AccordionDetails sx={{padding: 0}}>
                                     <List sx={{padding: 0}}>
                                         {subList.map((sub) => (
-                                            <ListItemButton key={sub.text}>
+                                            <ListItemButton
+                                                key={sub.text}
+                                                onClick={() => navigate(sub.path)}
+                                                sx={{margin: 0, paddingTop: "5px", paddingBottom: "5px"}}
+                                            >
                                                 <ListItemIcon
                                                     sx={{
                                                         justifyContent: "center",
@@ -122,7 +126,8 @@ export default function Sidebar() {
                                                 >
                                                     <ChevronRight/>
                                                 </ListItemIcon>
-                                                <ListItemText primary={sub.text}/>
+                                                <ListItemText primary={sub.text}
+                                                              slotProps={{primary: {sx: {fontSize: "13.5px"}}}}/>
                                             </ListItemButton>
                                         ))}
                                     </List>

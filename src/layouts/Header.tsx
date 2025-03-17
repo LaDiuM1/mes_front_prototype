@@ -22,7 +22,7 @@ const Header = () => {
                 }}
             >
                 {/*헤더 왼쪽 영역(솔루션명)*/}
-                <Box sx={{display: "flex", alignItems: "center", width: "240px", justifyContent: "space-evenly"}}>
+                <Box sx={{display: "flex", alignItems: "center", width: "250px", justifyContent: "space-evenly"}}>
                     <IconButton edge="start" color="inherit" onClick={() => dispatch(toggleSidebar())}>
                         <MenuIcon/>
                     </IconButton>

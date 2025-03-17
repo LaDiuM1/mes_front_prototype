@@ -6,8 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Checkbox, FormControlLabel } from "@mui/material";
-import { useState } from "react";
+import {Checkbox, FormControlLabel} from "@mui/material";
+import {useState} from "react";
 
 interface User {
     id: number;
@@ -31,7 +31,7 @@ function createUser(
     department: string,
     position: string
 ): User {
-    return { id, username, name, phone, email, address, department, position };
+    return {id, username, name, phone, email, address, department, position};
 }
 
 // 사용자 데이터 배열
@@ -41,6 +41,11 @@ const users = [
     createUser(3, 'user03', '박지성', '010-3456-7890', 'user03@example.com', '경기도 성남시', '마케팅팀', '팀장'),
     createUser(4, 'user04', '손흥민', '010-4567-8901', 'user04@example.com', '부산광역시 해운대구', '개발팀', '팀원'),
     createUser(5, 'user05', '정우영', '010-5678-9012', 'user05@example.com', '대구광역시 중구', '영업팀', '매니저'),
+    createUser(6, 'user01', '김철수', '010-1234-5678', 'user01@example.com', '서울특별시 강남구', '개발팀', '팀장'),
+    createUser(7, 'user02', '이영희', '010-2345-6789', 'user02@example.com', '서울특별시 서초구', '디자인팀', '팀원'),
+    createUser(8, 'user03', '박지성', '010-3456-7890', 'user03@example.com', '경기도 성남시', '마케팅팀', '팀장'),
+    createUser(9, 'user04', '손흥민', '010-4567-8901', 'user04@example.com', '부산광역시 해운대구', '개발팀', '팀원'),
+    createUser(10, 'user05', '정우영', '010-5678-9012', 'user05@example.com', '대구광역시 중구', '영업팀', '매니저'),
 ];
 
 const ListTable = () => {
@@ -74,23 +79,18 @@ const ListTable = () => {
     };
 
     return (
-        <TableContainer sx={{ my: "5px" }} component={Paper}>
-            <Table sx={{ minWidth: 800 }} aria-label="user table">
+        <TableContainer sx={{my: "5px", border: "none", boxShadow: "none", maxHeight: "610px"}} component={Paper}>
+            <Table sx={{minWidth: 800, border: "none", boxShadow: "none"}} stickyHeader size="small">
                 <TableHead>
                     <TableRow>
-                        <TableCell>
-                            <FormControlLabel
-                                label=""
-                                control={
-                                    <Checkbox
-                                        checked={isAllChecked}
-                                        indeterminate={!isAllChecked && Object.values(checkItems).some(Boolean)}
-                                        onChange={handleAllCheck}
-                                    />
-                                }
+                        <TableCell align="center" width="50px">
+                            <Checkbox
+                                checked={isAllChecked}
+                                indeterminate={!isAllChecked && Object.values(checkItems).some(Boolean)}
+                                onChange={handleAllCheck}
                             />
                         </TableCell>
-                        <TableCell>no</TableCell>
+                        <TableCell align="center">no</TableCell>
                         <TableCell align="center">아이디</TableCell>
                         <TableCell align="center">이름</TableCell>
                         <TableCell align="center">전화번호</TableCell>
@@ -102,17 +102,12 @@ const ListTable = () => {
                 </TableHead>
                 <TableBody>
                     {users.map((user) => (
-                        <TableRow key={user.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                            <TableCell component="th" scope="row">
+                        <TableRow hover={true} key={user.id} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                            <TableCell component="th" scope="row" size="small">
                                 {/* 개별 체크박스 */}
-                                <FormControlLabel
-                                    label=""
-                                    control={
-                                        <Checkbox
-                                            checked={Boolean(checkItems[user.id])}
-                                            onChange={() => handleCheckbox(user.id)}
-                                        />
-                                    }
+                                <Checkbox
+                                    checked={Boolean(checkItems[user.id])}
+                                    onChange={() => handleCheckbox(user.id)}
                                 />
                             </TableCell>
                             <TableCell align="center">{user.id}</TableCell>

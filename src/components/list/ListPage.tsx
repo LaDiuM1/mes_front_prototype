@@ -24,10 +24,10 @@ const listInputStyle = {
 const listButtonStyle = {}
 
 const ListPage = () => {
-    const [age, setAge] = React.useState('');
+    const [type, setType] = React.useState('');
 
     const handleChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value);
+        setType(event.target.value);
     };
 
     return (
@@ -44,47 +44,50 @@ const ListPage = () => {
                     </Box>
                 </Box>
 
-                <Box display="flex" flexDirection="column" gap={1} flexGrow={40} sx={{...listBoxStyle, padding: "10px"}}>
-                    <Box display="flex" justifyContent="flex-end" alignItems="center" gap={1} flexGrow={1}
+                <Box display="flex" flexDirection="column" gap={1} flexGrow={40}
+                     sx={{...listBoxStyle, padding: "10px"}}>
+                    <Box display="flex" justifyContent="space-between" alignItems="center" flexGrow={1}
                          sx={listContentStyle}>
-                        <FormControl size="small">
-                            <Select
-                                labelId="userType"
-                                value={age}
-                                onChange={handleChange}
-                                sx={listInputStyle}
-                                displayEmpty
-                            >
-                                <MenuItem value="">
-                                    <em>선택 없음</em>
-                                </MenuItem>
-                                <MenuItem value={10}>관리자</MenuItem>
-                                <MenuItem value={20}>사용자</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <TextField size="small"
-                                   id="outlined-basic"
-                                   label="검색필드1"
-                                   variant="outlined"
-                                   slotProps={{inputLabel: {shrink: true}}}
-                                   sx={listInputStyle}
-                        />
-                        <TextField size="small"
-                                   id="outlined-basic"
-                                   label="검색필드2"
-                                   variant="outlined"
-                                   slotProps={{inputLabel: {shrink: true}}}
-                                   sx={listInputStyle}
-                        />
-                        <Button variant="contained" color="inherit" sx={{mb: "3px"}}>검색</Button>
+                        <Typography fontSize="15px" fontWeight="bold" sx={{ml: "5px"}}>Total : 10건</Typography>
+                        <Box display="flex" gap={1}>
+                            <FormControl size="small">
+                                <Select
+                                    labelId="userType"
+                                    value={type}
+                                    onChange={handleChange}
+                                    sx={listInputStyle}
+                                    displayEmpty
+                                >
+                                    <MenuItem value="">
+                                        <em>선택 없음</em>
+                                    </MenuItem>
+                                    <MenuItem value={10}>관리자</MenuItem>
+                                    <MenuItem value={20}>사용자</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <TextField size="small"
+                                       id="outlined-basic"
+                                       label="검색필드1"
+                                       variant="outlined"
+                                       slotProps={{inputLabel: {shrink: true}}}
+                                       sx={listInputStyle}
+                            />
+                            <TextField size="small"
+                                       id="outlined-basic"
+                                       label="검색필드2"
+                                       variant="outlined"
+                                       slotProps={{inputLabel: {shrink: true}}}
+                                       sx={listInputStyle}
+                            />
+                            <Button variant="contained" color="inherit" sx={{mb: "3px"}}>검색</Button>
+                        </Box>
                     </Box>
 
-                    <Box flexGrow={35} sx={listContentStyle}>
-                        <Typography fontSize="15px" fontWeight="bold" sx={{ml: "5px"}}>총 : 5건</Typography>
+                    <Box flexGrow={35} sx={{...listContentStyle, borderTop: "1px solid #e8e8e8", borderBottom: "1px solid #e8e8e8", maxHeight: "600px"}}>
                         <ListTable/>
                     </Box>
 
-                    <Box flexGrow={3} sx={listContentStyle}>페이징 영역</Box>
+                    <Box flexGrow={1000} sx={listContentStyle}>페이징 영역</Box>
                 </Box>
             </Box>
         </>

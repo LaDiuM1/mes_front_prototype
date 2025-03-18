@@ -1,123 +1,193 @@
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import {Checkbox, FormControlLabel} from "@mui/material";
-import {useState} from "react";
+import {Checkbox} from "@mui/material";
+import {Column} from './listConfigType';
 
-interface User {
-    id: number;
-    username: string;
-    name: string;
-    phone: string;
-    email: string;
-    address: string;
-    department: string;
-    position: string;
-}
+const styles = {
+    tableContainer: {
+        maxHeight: "610px"
+    },
+    table: {
+        minWidth: 800,
+    },
+    lastRow: {
+        '&:last-child td, &:last-child th': {border: 0}
+    },
+    checkboxCell: {
+        align: "center",
+        padding: "checkbox",
+        width: "50px"
+    }
+};
 
-// 사용자 데이터 생성 함수
-function createUser(
-    id: number,
-    username: string,
-    name: string,
-    phone: string,
-    email: string,
-    address: string,
-    department: string,
-    position: string
-): User {
-    return {id, username, name, phone, email, address, department, position};
-}
-
-// 사용자 데이터 배열
-const users = [
-    createUser(1, 'user01', '김철수', '010-1234-5678', 'user01@example.com', '서울특별시 강남구', '개발팀', '팀장'),
-    createUser(2, 'user02', '이영희', '010-2345-6789', 'user02@example.com', '서울특별시 서초구', '디자인팀', '팀원'),
-    createUser(3, 'user03', '박지성', '010-3456-7890', 'user03@example.com', '경기도 성남시', '마케팅팀', '팀장'),
-    createUser(4, 'user04', '손흥민', '010-4567-8901', 'user04@example.com', '부산광역시 해운대구', '개발팀', '팀원'),
-    createUser(5, 'user05', '정우영', '010-5678-9012', 'user05@example.com', '대구광역시 중구', '영업팀', '매니저'),
-    createUser(6, 'user01', '김철수', '010-1234-5678', 'user01@example.com', '서울특별시 강남구', '개발팀', '팀장'),
-    createUser(7, 'user02', '이영희', '010-2345-6789', 'user02@example.com', '서울특별시 서초구', '디자인팀', '팀원'),
-    createUser(8, 'user03', '박지성', '010-3456-7890', 'user03@example.com', '경기도 성남시', '마케팅팀', '팀장'),
-    createUser(9, 'user04', '손흥민', '010-4567-8901', 'user04@example.com', '부산광역시 해운대구', '개발팀', '팀원'),
-    createUser(10, 'user05', '정우영', '010-5678-9012', 'user05@example.com', '대구광역시 중구', '영업팀', '매니저'),
+const mockData = [
+    {
+        id: 1,
+        userId: 'user01',
+        username: '김철수',
+        phoneNumber: '010-1234-5678',
+        email: 'user01@example.com',
+        address: '서울특별시 강남구',
+        department: '개발팀',
+        position: '팀장'
+    },
+    {
+        id: 2,
+        userId: 'user02',
+        username: '이영희',
+        phoneNumber: '010-2345-6789',
+        email: 'user02@example.com',
+        address: '서울특별시 서초구',
+        department: '디자인팀',
+        position: '팀원'
+    },
+    {
+        id: 3,
+        userId: 'user03',
+        username: '박지성',
+        phoneNumber: '010-3456-7890',
+        email: 'user03@example.com',
+        address: '경기도 성남시',
+        department: '마케팅팀',
+        position: '팀장'
+    },
+    {
+        id: 4,
+        userId: 'user04',
+        username: '손흥민',
+        phoneNumber: '010-4567-8901',
+        email: 'user04@example.com',
+        address: '부산광역시 해운대구',
+        department: '개발팀',
+        position: '팀원'
+    },
+    {
+        id: 5,
+        userId: 'user05',
+        username: '정우영',
+        phoneNumber: '010-5678-9012',
+        email: 'user05@example.com',
+        address: '대구광역시 중구',
+        department: '영업팀',
+        position: '매니저'
+    },
+    {
+        id: 6,
+        userId: 'user06',
+        username: '김민재',
+        phoneNumber: '010-6789-0123',
+        email: 'user06@example.com',
+        address: '광주광역시 서구',
+        department: '개발팀',
+        position: '팀장'
+    },
+    {
+        id: 7,
+        userId: 'user07',
+        username: '이강인',
+        phoneNumber: '010-7890-1234',
+        email: 'user07@example.com',
+        address: '인천광역시 남동구',
+        department: '디자인팀',
+        position: '팀원'
+    },
+    {
+        id: 8,
+        userId: 'user08',
+        username: '차범근',
+        phoneNumber: '010-8901-2345',
+        email: 'user08@example.com',
+        address: '경기도 수원시',
+        department: '마케팅팀',
+        position: '매니저'
+    },
+    {
+        id: 9,
+        userId: 'user09',
+        username: '박주영',
+        phoneNumber: '010-9012-3456',
+        email: 'user09@example.com',
+        address: '대전광역시 서구',
+        department: '영업팀',
+        position: '팀장'
+    },
+    {
+        id: 10,
+        userId: 'user10',
+        username: '조현우',
+        phoneNumber: '010-0123-4567',
+        email: 'user10@example.com',
+        address: '울산광역시 남구',
+        department: '개발팀',
+        position: '팀원'
+    }
 ];
 
-const ListTable = () => {
-    // 개별 체크박스 상태 관리
-    const [checkItems, setCheckItems] = useState<{ [id: number]: boolean }>({});
+interface ColumnProps {
+    columns: Column[];
+}
 
-    // 전체 체크 상태 관리
-    const isAllChecked = users.length > 0 && users.every(user => checkItems[user.id]);
+const ListTable = ({columns}: ColumnProps) => {
+    const [data, setData] = useState<any[]>([]);
+    const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
 
-    // 개별 체크박스 핸들러
-    const handleCheckbox = (id: number) => {
-        setCheckItems((prev) => ({
-            ...prev,
-            [id]: !prev[id] // 현재 값 반전
-        }));
-    };
+    useEffect(() => {
+        setData(mockData);
+    }, []);
 
-    // 전체 체크박스 핸들러
-    const handleAllCheck = () => {
-        if (isAllChecked) {
-            // 전체 해제
-            setCheckItems({});
+    const isAllChecked = data.length > 0 && selectedIds.size === data.length;
+
+    const toggleSelectAll = () => {
+        if (selectedIds.size === data.length) {
+            setSelectedIds(new Set());
         } else {
-            // 전체 선택
-            const newCheckedItems: { [id: number]: boolean } = {};
-            users.forEach(user => {
-                newCheckedItems[user.id] = true;
-            });
-            setCheckItems(newCheckedItems);
+            setSelectedIds(new Set(data.map((item) => item.id)));
         }
     };
 
+    const toggleSelect = (id: number) => {
+        setSelectedIds((prev) => {
+            const newSet = new Set(prev);
+            newSet.has(id) ? newSet.delete(id) : newSet.add(id);
+            return newSet;
+        });
+    };
+
     return (
-        <TableContainer sx={{my: "5px", border: "none", boxShadow: "none", maxHeight: "610px"}} component={Paper}>
-            <Table sx={{minWidth: 800, border: "none", boxShadow: "none"}} stickyHeader size="small">
+        <TableContainer sx={styles.tableContainer}>
+            <Table sx={styles.table} stickyHeader size="small">
                 <TableHead>
                     <TableRow>
-                        <TableCell align="center" width="50px">
-                            <Checkbox
-                                checked={isAllChecked}
-                                indeterminate={!isAllChecked && Object.values(checkItems).some(Boolean)}
-                                onChange={handleAllCheck}
-                            />
+                        <TableCell sx={styles.checkboxCell}>
+                            <Checkbox checked={isAllChecked}
+                                      indeterminate={!isAllChecked && selectedIds.size > 0}
+                                      onChange={toggleSelectAll}/>
                         </TableCell>
-                        <TableCell align="center">no</TableCell>
-                        <TableCell align="center">아이디</TableCell>
-                        <TableCell align="center">이름</TableCell>
-                        <TableCell align="center">전화번호</TableCell>
-                        <TableCell align="center">이메일</TableCell>
-                        <TableCell align="center">주소</TableCell>
-                        <TableCell align="center">부서</TableCell>
-                        <TableCell align="center">직책</TableCell>
+                        {columns.map(col => (
+                            <TableCell key={col.field} align="center">{col.headerName}</TableCell>
+                        ))}
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {users.map((user) => (
-                        <TableRow hover={true} key={user.id} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                            <TableCell component="th" scope="row" size="small">
-                                {/* 개별 체크박스 */}
+                    {data.map((row) => (
+                        <TableRow hover key={row.id} sx={styles.lastRow}>
+                            <TableCell sx={styles.checkboxCell}>
                                 <Checkbox
-                                    checked={Boolean(checkItems[user.id])}
-                                    onChange={() => handleCheckbox(user.id)}
+                                    checked={selectedIds.has(row.id)}
+                                    onChange={() => toggleSelect(row.id)}
                                 />
                             </TableCell>
-                            <TableCell align="center">{user.id}</TableCell>
-                            <TableCell align="center">{user.username}</TableCell>
-                            <TableCell align="center">{user.name}</TableCell>
-                            <TableCell align="center">{user.phone}</TableCell>
-                            <TableCell align="center">{user.email}</TableCell>
-                            <TableCell align="center">{user.address}</TableCell>
-                            <TableCell align="center">{user.department}</TableCell>
-                            <TableCell align="center">{user.position}</TableCell>
+                            {columns.map((col) => (
+                                <TableCell key={col.field} align="center">
+                                    {row[col.field]}
+                                </TableCell>
+                            ))}
                         </TableRow>
                     ))}
                 </TableBody>

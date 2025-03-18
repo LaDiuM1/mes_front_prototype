@@ -1,7 +1,10 @@
 import React from "react";
-import {Box, Button, FormControl, MenuItem, Select, SelectChangeEvent, TextField, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import ListTable from "@components/list/ListTable.tsx";
 import AppPagination from "@components/AppPagination.tsx";
+import {ButtonConfig, Column, SearchFieldConfig} from "@components/list/listConfigType.ts";
+import ListButton from "@components/list/ListButton.tsx";
+import ListControls from "@components/list/ListControls.tsx";
 
 const listBoxStyle = {
     border: "1px solid #e8e8e8",
@@ -9,105 +12,82 @@ const listBoxStyle = {
     margin: "4px 0",
     boxShadow: "1px 0px 4px rgba(0, 0, 0, 0.1)",
     borderRadius: "5px",
-    padding: "5px 10px",
+    padding: "10px",
     alignItems: "center"
-}
+};
 
 const listContentStyle = {
     width: "100%",
     alignItems: "center"
+};
+
+const titleStyle = {
+    fontSize: "20px",
+    fontWeight: "bold"
+};
+
+const totalTextStyle = {
+    fontSize: "15px",
+    fontWeight: "bold",
+    ml: "5px"
+};
+
+const tableContainerStyle = {
+    ...listContentStyle,
+};
+
+const paginationContainerStyle = {
+    position: "sticky",
+    bottom: 0,
+    width: "100%",
+    height: "80px",
+    display: "flex",
+    justifyContent: "center",
+    borderTop: "1px solid #e8e8e8",
+    backgroundColor: "white"
+};
+
+interface ListPageProps {
+    title: string;
+    apiUrl: string;
+    buttons: ButtonConfig[];
+    columns: Column[];
+    searchFields: SearchFieldConfig[];
 }
 
-const listInputStyle = {
-    width: "130px"
-}
-
-const listButtonStyle = {}
-
-const ListPage = () => {
-    const [type, setType] = React.useState('');
-
-    const handleChange = (event: SelectChangeEvent) => {
-        setType(event.target.value);
-    };
-
-    // @ts-ignore
+const ListPage = ({title, columns, buttons, searchFields, apiUrl}: ListPageProps) => {
     return (
-        <>
-            <Box display="flex" flexDirection="column" alignItems="center" height="100%">
-                <Box flexGrow={1} display="flex" justifyContent="space-between" sx={listBoxStyle}>
-                    <Box>
-                        <Typography fontSize="20px" fontWeight="bold">사용자 목록</Typography>
-                    </Box>
-                    <Box display="flex" gap="10px">
-                        <Button variant="contained" color="success" sx={listButtonStyle}>엑셀 다운로드</Button>
-                        <Button variant="contained" color="primary" sx={listButtonStyle}>등록</Button>
-                        <Button variant="contained" color="error" sx={listButtonStyle}>삭제</Button>
+        <Box display="flex" flexDirection="column" alignItems="center" height="100%">
+            <Box flexGrow={1} display="flex" justifyContent="space-between" sx={listBoxStyle}>
+                <Box>
+                    <Typography sx={titleStyle}>{title}</Typography>
+                </Box>
+                <Box display="flex" gap={1}>
+                    <ListButton buttons={buttons} />
+                </Box>
+            </Box>
+
+            <Box display="flex" flexDirection="column" gap={1} flexGrow={40} sx={{...listBoxStyle, padding: "10px"}}>
+                <Box display="flex" justifyContent="space-between" alignItems="center" flexGrow={1}
+                     sx={listContentStyle}>
+                    <Typography sx={totalTextStyle}>Total : 10건</Typography>
+                    <Box display="flex" gap={1}>
+                        <ListControls searchFields={searchFields} />
                     </Box>
                 </Box>
 
-                <Box display="flex" flexDirection="column" gap={1} flexGrow={40}
-                     sx={{...listBoxStyle, padding: "10px"}}>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" flexGrow={1}
-                         sx={listContentStyle}>
-                        <Typography fontSize="15px" fontWeight="bold" sx={{ml: "5px"}}>Total : 10건</Typography>
-                        <Box display="flex" gap={1}>
-                            <FormControl size="small">
-                                <Select
-                                    labelId="userType"
-                                    value={type}
-                                    onChange={handleChange}
-                                    sx={listInputStyle}
-                                    displayEmpty
-                                >
-                                    <MenuItem value="">
-                                        <em>선택 없음</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>관리자</MenuItem>
-                                    <MenuItem value={20}>사용자</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <TextField size="small"
-                                       id="outlined-basic"
-                                       label="검색필드1"
-                                       variant="outlined"
-                                       slotProps={{inputLabel: {shrink: true}}}
-                                       sx={listInputStyle}
-                            />
-                            <TextField size="small"
-                                       id="outlined-basic"
-                                       label="검색필드2"
-                                       variant="outlined"
-                                       slotProps={{inputLabel: {shrink: true}}}
-                                       sx={listInputStyle}
-                            />
-                            <Button variant="contained" color="inherit" sx={{mb: "3px"}}>검색</Button>
-                        </Box>
-                    </Box>
+                <Box flexGrow={35} sx={tableContainerStyle}>
+                    <ListTable columns={columns}/>
+                </Box>
 
-                    <Box flexGrow={35} sx={{...listContentStyle, borderTop: "1px solid #e8e8e8", borderBottom: "1px solid #e8e8e8", maxHeight: "600px"}}>
-                        <ListTable/>
-                    </Box>
-                    <Box
-                        sx={{
-                            position: "sticky",
-                            bottom: 0,
-                            width: "100%",
-                            height: "80px",
-                            display: "flex",
-                            justifyContent: "center",
-                            borderTop: "1px solid #e8e8e8",
-                            backgroundColor: "white"
-                        }}
-                    >
-                        <Box display="flex" alignItems="center">
-                            <AppPagination />
-                        </Box>
+                <Box sx={paginationContainerStyle}>
+                    <Box display="flex" alignItems="center">
+                        <AppPagination />
                     </Box>
                 </Box>
             </Box>
-        </>
-    )
-}
+        </Box>
+    );
+};
 
 export default ListPage;

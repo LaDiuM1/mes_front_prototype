@@ -17,7 +17,7 @@ import {JSX} from "react";
 
 interface SubMenuItem {
     text: string;
-    path: string;
+    path?: string;
 }
 
 interface MenuItem {

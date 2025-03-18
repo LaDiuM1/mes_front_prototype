@@ -2,7 +2,6 @@ import {Box} from "@mui/material";
 import Sidebar from "@layouts/Sidebar.tsx";
 import Header from "@layouts/Header.tsx";
 import {Outlet} from "react-router-dom";
-import {useState} from "react";
 
 const Layout = () => {
     return (

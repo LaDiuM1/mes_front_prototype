@@ -11,6 +11,7 @@
     "paths": {
       "@api/*": ["src/api/*"],
       "@app/*": ["src/app/*"],
+      "@features/*": ["src/app/features/*"],
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
       "@layouts/*": ["src/layouts/*"],

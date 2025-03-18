@@ -1,6 +1,7 @@
 import React from "react";
 import {Box, Button, FormControl, MenuItem, Select, SelectChangeEvent, TextField, Typography} from "@mui/material";
 import ListTable from "@components/list/ListTable.tsx";
+import AppPagination from "@components/AppPagination.tsx";
 
 const listBoxStyle = {
     border: "1px solid #e8e8e8",
@@ -30,6 +31,7 @@ const ListPage = () => {
         setType(event.target.value);
     };
 
+    // @ts-ignore
     return (
         <>
             <Box display="flex" flexDirection="column" alignItems="center" height="100%">
@@ -86,8 +88,22 @@ const ListPage = () => {
                     <Box flexGrow={35} sx={{...listContentStyle, borderTop: "1px solid #e8e8e8", borderBottom: "1px solid #e8e8e8", maxHeight: "600px"}}>
                         <ListTable/>
                     </Box>
-
-                    <Box flexGrow={1000} sx={listContentStyle}>페이징 영역</Box>
+                    <Box
+                        sx={{
+                            position: "sticky",
+                            bottom: 0,
+                            width: "100%",
+                            height: "80px",
+                            display: "flex",
+                            justifyContent: "center",
+                            borderTop: "1px solid #e8e8e8",
+                            backgroundColor: "white"
+                        }}
+                    >
+                        <Box display="flex" alignItems="center">
+                            <AppPagination />
+                        </Box>
+                    </Box>
                 </Box>
             </Box>
         </>

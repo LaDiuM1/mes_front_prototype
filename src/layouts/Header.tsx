@@ -1,7 +1,7 @@
 import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {useDispatch} from "react-redux";
-import {toggleSidebar} from "@app/features/sidebarSlice.tsx";
+import {toggleSidebar} from "@features/SidebarSlice.tsx";
 
 const Header = () => {
     const dispatch = useDispatch();

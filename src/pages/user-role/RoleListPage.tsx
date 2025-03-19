@@ -15,7 +15,7 @@ const roleListConfig = {
         { name: 'code', label: '권한코드', type: 'text' },
         { name: 'roleName', label: '권한명', type: 'text' },
     ],
-    apiUrl: '/api/roles',
+    apiUrl: '/roles',
 };
 
 const UserListPage = () => {

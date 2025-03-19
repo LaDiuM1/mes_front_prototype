@@ -22,7 +22,7 @@ const userListConfig = {
         { name: 'id', label: '아이디', type: 'text' },
         { name: 'name', label: '이름', type: 'text' },
     ],
-    apiUrl: '/api/users',
+    apiUrl: '/users',
 };
 
 const UserListPage = () => {

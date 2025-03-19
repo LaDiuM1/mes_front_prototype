@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {Checkbox} from "@mui/material";
 import {Column} from './listConfigType';
+import {useNavigate} from "react-router-dom";
 
 const styles = {
     tableContainer: {
@@ -16,7 +17,8 @@ const styles = {
     table: {
         minWidth: 800,
     },
-    lastRow: {
+    tableRow: {
+        cursor: 'pointer',
         '&:last-child td, &:last-child th': {border: 0}
     },
     checkboxCell: {
@@ -52,21 +54,36 @@ const roleListMockData = [
     { id: 10, code: 'RO-0121', roleName: '외부 감사자' },
 ];
 
+const orderListMockData = [
+    { id: 1, code: 'OR-20240301', receivedDate: '2024-03-01', deliveryRequestDate: '2024-03-10', orderStatus: '생산 지시 대기' },
+    { id: 2, code: 'OR-20240302', receivedDate: '2024-03-02', deliveryRequestDate: '2024-03-12', orderStatus: '생산중' },
+    { id: 3, code: 'OR-20240303', receivedDate: '2024-03-03', deliveryRequestDate: '2024-03-15', orderStatus: '생산완료' },
+    { id: 4, code: 'OR-20240304', receivedDate: '2024-03-04', deliveryRequestDate: '2024-03-18', orderStatus: '생산중' },
+    { id: 5, code: 'OR-20240305', receivedDate: '2024-03-05', deliveryRequestDate: '2024-03-20', orderStatus: '생산 지시 대기' },
+    { id: 6, code: 'OR-20240306', receivedDate: '2024-03-06', deliveryRequestDate: '2024-03-22', orderStatus: '생산완료' },
+    { id: 7, code: 'OR-20240307', receivedDate: '2024-03-07', deliveryRequestDate: '2024-03-25', orderStatus: '생산 지시 대기' },
+    { id: 8, code: 'OR-20240308', receivedDate: '2024-03-08', deliveryRequestDate: '2024-03-28', orderStatus: '생산중' },
+    { id: 9, code: 'OR-20240309', receivedDate: '2024-03-09', deliveryRequestDate: '2024-03-30', orderStatus: '생산 지시 대기' },
+    { id: 10, code: 'OR-20240310', receivedDate: '2024-03-10', deliveryRequestDate: '2024-04-02', orderStatus: '생산완료' },
+];
+
+
 interface ListTableProps {
     columns: Column[];
     apiUrl: string;
 }
 
 const ListTable = ({columns, apiUrl}: ListTableProps) => {
+    const navigate = useNavigate();
     const [data, setData] = useState<any[]>([]);
     const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
 
     useEffect(() => {
-        let mockData;
+        let mockData = [{}];
         switch (apiUrl) {
-            case '/api/users': mockData = userListMockData; break;
-            case '/api/roles': mockData = roleListMockData; break;
-            default: mockData = userListMockData;
+            case '/users': mockData = userListMockData; break;
+            case '/roles': mockData = roleListMockData; break;
+            case '/orders': mockData = orderListMockData; break;
         }
         setData(mockData);
     }, []);
@@ -89,6 +106,11 @@ const ListTable = ({columns, apiUrl}: ListTableProps) => {
         });
     };
 
+    // 상세 조회 페이지 이동
+    const enterDetailPage = (id: number) => {
+        navigate(`${apiUrl}/${id}`);
+    };
+
     return (
         <TableContainer sx={styles.tableContainer}>
             <Table sx={styles.table} stickyHeader size="small">
@@ -100,13 +122,22 @@ const ListTable = ({columns, apiUrl}: ListTableProps) => {
                                       onChange={toggleSelectAll} />
                         </TableCell>
                         {columns.map(col => (
-                            <TableCell key={col.field} align="center">{col.headerName}</TableCell>
+                            <TableCell key={col.field} align="left">{col.headerName}</TableCell>
                         ))}
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {data.map((row) => (
-                        <TableRow hover key={row.id} sx={styles.lastRow}>
+                        <TableRow key={row.id}
+                                  sx={styles.tableRow}
+                                  onClick={(e) =>{
+                                      const target = e.target as HTMLElement;
+                                      // 체크박스 열은 페이지 이동 제외
+                                      if (!target.closest('input[type="checkbox"]')) {
+                                          enterDetailPage(row.id)
+                                      }
+                                  }}
+                                  hover>
                             <TableCell sx={styles.checkboxCell}>
                                 <Checkbox
                                     checked={selectedIds.has(row.id)}
@@ -114,7 +145,7 @@ const ListTable = ({columns, apiUrl}: ListTableProps) => {
                                 />
                             </TableCell>
                             {columns.map((col) => (
-                                <TableCell key={col.field} align="center">
+                                <TableCell key={col.field} align="left">
                                     {row[col.field]}
                                 </TableCell>
                             ))}

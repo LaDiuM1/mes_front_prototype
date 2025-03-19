@@ -1,20 +1,32 @@
-import React, {useEffect} from "react";
-import {Box, Typography} from "@mui/material";
+import React from "react";
+import { Box, Typography } from "@mui/material";
 import ListTable from "@components/list/ListTable.tsx";
 import AppPagination from "@components/AppPagination.tsx";
-import {ButtonConfig, Column, SearchFieldConfig} from "@components/list/listConfigType.ts";
+import { ButtonConfig, Column, SearchFieldConfig } from "@components/list/listConfigType.ts";
 import ListButton from "@components/list/ListButton.tsx";
 import ListControls from "@components/list/ListControls.tsx";
-import {useDispatch} from "react-redux";
-import useTitle from "@hooks/useTitle.ts";
 
 const styles = {
+    listBox: {
+        borderBottom: "1px solid #e8e8e8",
+        boxShadow: "1px 0px 4px rgba(0, 0, 0, 0.1)",
+        width: "100%",
+        padding: "10px 20px",
+        alignItems: "center",
+        display: "flex",
+        justifyContent: "space-between",
+        flexGrow: 1
+    },
     listContent: {
         width: "100%",
         alignItems: "center",
         display: "flex",
         justifyContent: "space-between",
         flexGrow: 1
+    },
+    title: {
+        fontSize: "20px",
+        fontWeight: "bold"
     },
     totalText: {
         fontSize: "15px",
@@ -25,6 +37,14 @@ const styles = {
         width: "100%",
         alignItems: "center",
         flexGrow: 35
+    },
+    mainContainer: {
+        width: "100%",
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        gap: 1,
+        flexGrow: 40
     },
     paginationContainer: {
         position: "sticky",
@@ -51,28 +71,23 @@ interface ListPageProps {
     searchFields: SearchFieldConfig[];
 }
 
-const ListPage = ({title, columns, buttons, searchFields, apiUrl}: ListPageProps) => {
-    const { updateTitle } = useTitle();
-    useEffect(() => {
-        updateTitle(title);
-    })
-
-    return (<>
-            <Box sx={styles.listContent}>
-                <Typography sx={styles.totalText}>Total : 10건</Typography>
+const Main = ({ title, columns, buttons, searchFields, apiUrl }: ListPageProps) => {
+    return (
+        <Box display="flex" flexDirection="column" alignItems="center" height="100%">
+            <Box sx={styles.listBox}>
+                <Box>
+                    <Typography sx={styles.title}>{title}</Typography>
+                </Box>
                 <Box sx={styles.buttonContainer}>
-                    <ListControls searchFields={searchFields} />
+                    <ListButton buttons={buttons} />
                 </Box>
             </Box>
 
-            <Box sx={styles.tableContainer}>
-                <ListTable columns={columns} apiUrl={apiUrl} />
-            </Box>
+            <Box sx={styles.mainContainer}>
 
-            <Box sx={styles.paginationContainer}>
-                <AppPagination />
             </Box>
-    </>);
+        </Box>
+    );
 };
 
-export default ListPage;
+export default Main;

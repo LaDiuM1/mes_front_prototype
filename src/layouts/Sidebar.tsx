@@ -17,7 +17,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import {ChevronRight} from "@mui/icons-material";
-import {selectSidebar} from "@app/features/sidebarSlice.tsx";
+import {selectSidebar} from "@features/SidebarSlice.tsx";
 import theme from "@styles/theme.ts";
 import {useNavigate} from "react-router-dom";
 

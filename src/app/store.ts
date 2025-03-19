@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from '@app/features/userSlice';
-import menuReducer from "@app/features/menuSlice";
-import sidebarReducer from "@app/features/sidebarSlice";
+import userReducer from '@features/UserSlice.tsx';
+import menuReducer from "@features/MenuSlice.tsx";
+import sidebarReducer from "@features/SidebarSlice.tsx";
+import titleReducer from "@features/main-header/TitleSlice.tsx";
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
         menu: menuReducer,
-        sidebar: sidebarReducer
+        sidebar: sidebarReducer,
+        title: titleReducer,
     },
 });
 

@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import { Provider } from "react-redux";
 import { store } from "@app/store.ts";
-import AppRoutes from "@routes/index.tsx";
+import AppRoutes from "@routes/AppRoutes.tsx";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import theme from "@styles/theme.ts"; // ✅ MUI 테마 추가
 

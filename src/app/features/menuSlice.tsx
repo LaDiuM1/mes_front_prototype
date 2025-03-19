@@ -38,7 +38,7 @@ const initialState: MenuState = {
             icon: <Settings />,
             subList: [
                 { text: "사용자 정보 관리", path:"/userList" },
-                { text: "사용자 권한 관리" },
+                { text: "사용자 권한 관리", path:"/roleList" },
                 { text: "사용자 로그 관리" },
             ],
         },

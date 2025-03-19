@@ -3,7 +3,7 @@ import ListPage from "@components/list/ListPage.tsx";
 const userListConfig = {
     title: '사용자 목록',
     columns: [
-        { field: 'id', headerName: '번호' },
+        { field: 'id', headerName: 'NO' },
         { field: 'userId', headerName: '아이디' },
         { field: 'username', headerName: '이름' },
         { field: 'phoneNumber', headerName: '전화번호' },

@@ -1,0 +1,26 @@
+import ListPage from "@components/list/ListPage.tsx";
+
+const roleListConfig = {
+    title: '사용자 권한 목록',
+    columns: [
+        { field: 'id', headerName: 'NO' },
+        { field: 'code', headerName: '권한 코드' },
+        { field: 'roleName', headerName: '권한명' },
+    ],
+    buttons: [
+        { type: 'add', url: '/roles/add' },
+        { type: 'delete', url: '/roles/delete' },
+    ],
+    searchFields: [
+        { name: 'code', label: '권한코드', type: 'text' },
+        { name: 'roleName', label: '권한명', type: 'text' },
+    ],
+    apiUrl: '/api/roles',
+};
+
+const UserListPage = () => {
+    // @ts-ignore
+    return <ListPage {...roleListConfig} />;
+};
+
+export default UserListPage;

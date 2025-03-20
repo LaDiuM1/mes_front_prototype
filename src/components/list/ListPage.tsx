@@ -3,10 +3,10 @@ import {Box, Typography} from "@mui/material";
 import ListTable from "@components/list/ListTable.tsx";
 import AppPagination from "@components/AppPagination.tsx";
 import {ButtonConfig, Column, SearchFieldConfig} from "@components/list/listConfigType.ts";
-import ListButton from "@components/list/ListButton.tsx";
 import ListControls from "@components/list/ListControls.tsx";
-import {useDispatch} from "react-redux";
-import useTitle from "@hooks/useTitle.ts";
+import useTitle from "@hooks/main-header/useTitle.ts";
+import useButtons from "@hooks/main-header/useBottons.ts";
+import {usePageSetup} from "@hooks/usePageSetup.ts";
 
 const styles = {
     listContent: {
@@ -52,10 +52,7 @@ interface ListPageProps {
 }
 
 const ListPage = ({title, columns, buttons, searchFields, apiUrl}: ListPageProps) => {
-    const { updateTitle } = useTitle();
-    useEffect(() => {
-        updateTitle(title);
-    })
+    usePageSetup({ title, buttons });
 
     return (<>
             <Box sx={styles.listContent}>

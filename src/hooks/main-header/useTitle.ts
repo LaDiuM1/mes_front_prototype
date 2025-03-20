@@ -1,6 +1,6 @@
-import { useDispatch } from "react-redux";
-import { setTitle } from "@features/main-header/TitleSlice";
-import { AppDispatch } from "../app/store";
+import {useDispatch} from "react-redux";
+import {setTitle} from "@features/main-header/TitleSlice";
+import {AppDispatch} from "@app/store.ts";
 
 const useTitle = () => {
     const dispatch = useDispatch<AppDispatch>();

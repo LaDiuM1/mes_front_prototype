@@ -1,12 +1,11 @@
-import {Box, Button} from "@mui/material";
+import {Button} from "@mui/material";
 import React from "react";
-import {ButtonConfig} from "@components/list/listConfigType.ts";
+import {useSelector} from "react-redux";
+import {RootState} from "@app/store.ts";
 
-interface ListButtonProps {
-    buttons: ButtonConfig[];
-}
+const Buttons = () => {
+    const buttons = useSelector((state: RootState) => state.buttons.buttons);
 
-const ListButton = ({ buttons }: ListButtonProps) => {
     return (<>
         {
             buttons.map(button => (
@@ -24,4 +23,4 @@ const ListButton = ({ buttons }: ListButtonProps) => {
     </>);
 }
 
-export default ListButton;
+export default Buttons;

@@ -43,14 +43,13 @@ const Layout = () => {
                                     {title}
                                 </Typography>
                             </Box>
-                            <Box display="flex" gap={1}>
+                            <Box display="flex" gap={1.5}>
                                 <Buttons />
                             </Box>
                         </Box>
 
                         {/* 메인 콘텐츠 */}
                         <Box width="100%"
-                             padding="15px 20px"
                              display="flex"
                              flexDirection="column"
                              flexGrow={40}>

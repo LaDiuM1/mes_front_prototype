@@ -12,7 +12,6 @@ import {useNavigate} from "react-router-dom";
 
 const styles = {
     tableContainer: {
-        maxHeight: "610px"
     },
     table: {
         minWidth: 800,

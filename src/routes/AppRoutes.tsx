@@ -4,7 +4,7 @@ import Home from "@pages/Home.tsx";
 import UserListPage from "@pages/user/UserListPage.tsx";
 import UserRoleListPage from "@pages/user-role/RoleListPage.tsx";
 import OrderListPage from "@pages/order/OrderListPage.tsx";
-import DetailList from "@components/detail-list/DetailList.tsx";
+import OrderDetailListPage from "@pages/order/OrderDetailListPage.tsx";
 
 const AppRoutes = () => {
     return (
@@ -19,7 +19,7 @@ const AppRoutes = () => {
                     <Route path="/orders" element={<OrderListPage />} />
 
                     {/* 상세 조회 페이지*/}
-                    <Route path="/orders/:id" element={<DetailList />} />
+                    <Route path="/orders/:id" element={<OrderDetailListPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>

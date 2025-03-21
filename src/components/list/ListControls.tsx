@@ -1,19 +1,9 @@
 import React from "react";
 import {Button, FormControl, MenuItem, Select, TextField} from "@mui/material";
+import {Props} from "src/types/commonPageTypes.ts";
 
 const listInputStyle = {
     width: "130px"
-}
-
-interface SearchFieldConfig {
-    name: string;
-    label: string;
-    type: 'text' | 'select';
-    options?: string[];
-}
-
-interface Props {
-    searchFields: SearchFieldConfig[];
 }
 
 const ListControls = ({searchFields}: Props) => {

@@ -1,6 +1,6 @@
 import {useDispatch} from "react-redux";
 import {setButtons} from "@features/main-header/ButtonSlice.tsx";
-import {ButtonConfig} from "@components/list/listConfigType.ts";
+import {ButtonConfig} from "src/types/configTypes.ts";
 import {AppDispatch} from "@app/store.ts";
 
 const useButtons = () => {

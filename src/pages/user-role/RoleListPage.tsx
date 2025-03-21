@@ -1,4 +1,4 @@
-import ListPage from "@components/list/ListPage.tsx";
+import List from "@components/List.tsx";
 
 const roleListConfig = {
     title: '사용자 권한 목록',
@@ -20,7 +20,7 @@ const roleListConfig = {
 
 const UserListPage = () => {
     // @ts-ignore
-    return <ListPage {...roleListConfig} />;
+    return <List {...roleListConfig} />;
 };
 
 export default UserListPage;

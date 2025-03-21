@@ -1,7 +1,7 @@
 import React from "react";
 import {Pagination, Stack} from "@mui/material";
 
-const AppPagination = () => {
+const ListPagination = () => {
     return (
         <Stack spacing={2}>
             <Pagination count={10} variant="outlined" color="primary" shape="rounded" showFirstButton showLastButton />
@@ -9,4 +9,4 @@ const AppPagination = () => {
     );
 }
 
-export default AppPagination;
+export default ListPagination;

@@ -1,4 +1,4 @@
-import {ButtonConfig} from "@components/list/listConfigType.ts";
+import {ButtonConfig} from "@components/list/configTypes.ts";
 import {ActionReducerMapBuilder, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 

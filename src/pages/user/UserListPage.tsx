@@ -1,4 +1,4 @@
-import ListPage from "@components/list/ListPage.tsx";
+import List from "@components/List.tsx";
 
 const userListConfig = {
     title: '사용자 목록',
@@ -27,7 +27,7 @@ const userListConfig = {
 
 const UserListPage = () => {
     // @ts-ignore
-    return <ListPage {...userListConfig} />;
+    return <List {...userListConfig} />;
 };
 
 export default UserListPage;

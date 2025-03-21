@@ -7,24 +7,95 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import {Checkbox} from "@mui/material";
-import {Column} from './listConfigType';
+import {ListTableProps} from 'src/types/commonPageTypes.ts';
 import {useNavigate} from "react-router-dom";
+import listTableStyles from "@components/list/listTableStyle.ts"
 
-const styles = {
-    tableContainer: {
-    },
-    table: {
-        minWidth: 800,
-    },
-    tableRow: {
-        cursor: 'pointer',
-        '&:last-child td, &:last-child th': {border: 0}
-    },
-    checkboxCell: {
-        align: "center",
-        padding: "checkbox",
-        width: "50px"
-    }
+
+const ListTable = ({ columns, apiUrl }: ListTableProps) => {
+    const navigate = useNavigate();
+    const [data, setData] = useState<any[]>([]);
+    const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+
+    useEffect(() => {
+        let mockData = [{}];
+        switch (apiUrl) {
+            case '/users': mockData = userListMockData; break;
+            case '/roles': mockData = roleListMockData; break;
+            case '/orders': mockData = orderListMockData; break;
+        }
+        setData(mockData);
+    }, []);
+
+    const isAllChecked = data.length > 0 && selectedIds.size === data.length;
+
+    const toggleSelectAll = () => {
+        if (selectedIds.size === data.length) {
+            setSelectedIds(new Set());
+        } else {
+            setSelectedIds(new Set(data.map((item) => item.id)));
+        }
+    };
+
+    const toggleSelect = (id: number) => {
+        setSelectedIds((prev) => {
+            const newSet = new Set(prev);
+            newSet.has(id) ? newSet.delete(id) : newSet.add(id);
+            return newSet;
+        });
+    };
+
+    const enterDetailPage = (id: number) => {
+        navigate(`${apiUrl}/${id}`);
+    };
+
+    return (
+        <TableContainer>
+            <Table sx={listTableStyles.table} stickyHeader size="small">
+                <TableHead>
+                    <TableRow>
+                        <TableCell sx={listTableStyles.checkboxCell}>
+                            <Checkbox
+                                checked={isAllChecked}
+                                indeterminate={!isAllChecked && selectedIds.size > 0}
+                                onChange={toggleSelectAll}
+                            />
+                        </TableCell>
+                        {columns.map(col => (
+                            <TableCell key={col.field} align="left">{col.headerName}</TableCell>
+                        ))}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {data.map((row) => (
+                        <TableRow
+                            key={row.id}
+                            sx={listTableStyles.tableRow}
+                            onClick={(e) => {
+                                const target = e.target as HTMLElement;
+                                if (!target.closest('input[type="checkbox"]')) {
+                                    enterDetailPage(row.id);
+                                }
+                            }}
+                            hover
+                        >
+                            <TableCell sx={listTableStyles.checkboxCell}>
+                                <Checkbox
+                                    checked={selectedIds.has(row.id)}
+                                    onChange={() => toggleSelect(row.id)}
+                                />
+                            </TableCell>
+                            {columns.map((col) => (
+                                <TableCell key={col.field} align="left">
+                                    {row[col.field]}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    );
 };
 
 const userListMockData = [
@@ -65,95 +136,5 @@ const orderListMockData = [
     { id: 9, code: 'OR-20240309', receivedDate: '2024-03-09', deliveryRequestDate: '2024-03-30', orderStatus: '생산 지시 대기' },
     { id: 10, code: 'OR-20240310', receivedDate: '2024-03-10', deliveryRequestDate: '2024-04-02', orderStatus: '생산완료' },
 ];
-
-
-interface ListTableProps {
-    columns: Column[];
-    apiUrl: string;
-}
-
-const ListTable = ({columns, apiUrl}: ListTableProps) => {
-    const navigate = useNavigate();
-    const [data, setData] = useState<any[]>([]);
-    const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
-
-    useEffect(() => {
-        let mockData = [{}];
-        switch (apiUrl) {
-            case '/users': mockData = userListMockData; break;
-            case '/roles': mockData = roleListMockData; break;
-            case '/orders': mockData = orderListMockData; break;
-        }
-        setData(mockData);
-    }, []);
-
-    const isAllChecked = data.length > 0 && selectedIds.size === data.length;
-
-    const toggleSelectAll = () => {
-        if (selectedIds.size === data.length) {
-            setSelectedIds(new Set());
-        } else {
-            setSelectedIds(new Set(data.map((item) => item.id)));
-        }
-    };
-
-    const toggleSelect = (id: number) => {
-        setSelectedIds((prev) => {
-            const newSet = new Set(prev);
-            newSet.has(id) ? newSet.delete(id) : newSet.add(id);
-            return newSet;
-        });
-    };
-
-    // 상세 조회 페이지 이동
-    const enterDetailPage = (id: number) => {
-        navigate(`${apiUrl}/${id}`);
-    };
-
-    return (
-        <TableContainer sx={styles.tableContainer}>
-            <Table sx={styles.table} stickyHeader size="small">
-                <TableHead>
-                    <TableRow>
-                        <TableCell sx={styles.checkboxCell}>
-                            <Checkbox checked={isAllChecked}
-                                      indeterminate={!isAllChecked && selectedIds.size > 0}
-                                      onChange={toggleSelectAll} />
-                        </TableCell>
-                        {columns.map(col => (
-                            <TableCell key={col.field} align="left">{col.headerName}</TableCell>
-                        ))}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {data.map((row) => (
-                        <TableRow key={row.id}
-                                  sx={styles.tableRow}
-                                  onClick={(e) =>{
-                                      const target = e.target as HTMLElement;
-                                      // 체크박스 열은 페이지 이동 제외
-                                      if (!target.closest('input[type="checkbox"]')) {
-                                          enterDetailPage(row.id)
-                                      }
-                                  }}
-                                  hover>
-                            <TableCell sx={styles.checkboxCell}>
-                                <Checkbox
-                                    checked={selectedIds.has(row.id)}
-                                    onChange={() => toggleSelect(row.id)}
-                                />
-                            </TableCell>
-                            {columns.map((col) => (
-                                <TableCell key={col.field} align="left">
-                                    {row[col.field]}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
-};
 
 export default ListTable;

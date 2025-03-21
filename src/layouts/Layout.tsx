@@ -5,7 +5,7 @@ import {Outlet} from "react-router-dom";
 import React from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@app/store.ts";
-import Buttons from "@components/Buttons.tsx";
+import Buttons from "@components/items/Buttons.tsx";
 
 const Layout = () => {
     const title = useSelector((state: RootState) => state.title.title);

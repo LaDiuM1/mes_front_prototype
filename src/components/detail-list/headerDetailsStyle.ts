@@ -30,6 +30,8 @@ const headerDetailsStyles = {
     },
     dataCell: {
         border: '1px solid #e8e8e8',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
     },
 };
 

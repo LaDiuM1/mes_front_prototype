@@ -32,7 +32,19 @@ const orderDetailListConfig = {
             ],
         },
     ],
-    apiUrl: '/orders',
+    table: {
+        existCheckbox: false,
+        columns: [
+            { field: 'id', headerName: 'NO' },
+            { field: 'code', headerName: '수주 상세 코드' },
+            { field: 'itemCode', headerName: '품목 코드' },
+            { field: 'itemName', headerName: '품목명' },
+            { field: 'itemType', headerName: '품목 유형' },
+            { field: 'unit', headerName: '단위' },
+            { field: 'orderQty', headerName: '주문 수량' },
+        ],
+    },
+    apiUrl: '/orders/detail',
 };
 
 const OrderDetailListPage = () => {

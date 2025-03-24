@@ -21,6 +21,7 @@ const ListTable = ({ table, apiUrl } : ListTableProps) => {
             case '/users': mockData = userListMockData; break;
             case '/roles': mockData = roleListMockData; break;
             case '/orders': mockData = orderListMockData; break;
+            case `/orders/detail`: mockData = orderDetailListMockData; break;
         }
         setData(mockData);
     }, []);
@@ -49,7 +50,7 @@ const ListTable = ({ table, apiUrl } : ListTableProps) => {
 
     return (
         <TableContainer>
-            <Table sx={styles.table} stickyHeader size="medium">
+            <Table sx={styles.table} stickyHeader size={apiUrl.includes('detail') ? 'small' : 'medium'}>
                 <TableHead>
                     <TableRow>
                         {table.existCheckbox &&
@@ -152,6 +153,19 @@ const orderListMockData = [
     { id: 8, code: 'OR-20240308', receivedDate: '2024-03-08', deliveryRequestDate: '2024-03-28', orderStatus: '생산중' },
     { id: 9, code: 'OR-20240309', receivedDate: '2024-03-09', deliveryRequestDate: '2024-03-30', orderStatus: '생산 지시 대기' },
     { id: 10, code: 'OR-20240310', receivedDate: '2024-03-10', deliveryRequestDate: '2024-04-02', orderStatus: '생산완료' },
+];
+
+const orderDetailListMockData = [
+    { id: 1, code: 'OR-20240301', itemCode: 'ITM-001', itemName: '기어박스', itemType: '기계부품', unit: 'EA', orderQty: 100 },
+    { id: 2, code: 'OR-20240302', itemCode: 'ITM-002', itemName: '컨트롤러', itemType: '전자부품', unit: 'EA', orderQty: 200 },
+    { id: 3, code: 'OR-20240303', itemCode: 'ITM-003', itemName: '센서모듈', itemType: '전자부품', unit: 'EA', orderQty: 150 },
+    { id: 4, code: 'OR-20240304', itemCode: 'ITM-004', itemName: '모터', itemType: '기계부품', unit: 'EA', orderQty: 120 },
+    { id: 5, code: 'OR-20240305', itemCode: 'ITM-005', itemName: '배선 하니스', itemType: '전기부품', unit: 'SET', orderQty: 90 },
+    { id: 6, code: 'OR-20240306', itemCode: 'ITM-006', itemName: 'PCB 보드', itemType: '전자부품', unit: 'EA', orderQty: 300 },
+    { id: 7, code: 'OR-20240307', itemCode: 'ITM-007', itemName: '유압 실린더', itemType: '기계부품', unit: 'EA', orderQty: 80 },
+    { id: 8, code: 'OR-20240308', itemCode: 'ITM-008', itemName: '알루미늄 프레임', itemType: '구조부품', unit: 'M', orderQty: 500 },
+    { id: 9, code: 'OR-20240309', itemCode: 'ITM-009', itemName: 'LCD 디스플레이', itemType: '전자부품', unit: 'EA', orderQty: 60 },
+    { id: 10, code: 'OR-20240310', itemCode: 'ITM-010', itemName: '볼트 세트', itemType: '소모품', unit: 'SET', orderQty: 1000 },
 ];
 
 export default ListTable;

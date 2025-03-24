@@ -25,6 +25,7 @@ export interface Props {
 export interface DetailPageProps {
     pageHeader: PageHeaderConfig;
     headerDetails: HeaderDetailConfig[];
+    table: TableConfig;
     apiUrl: string;
 }
 

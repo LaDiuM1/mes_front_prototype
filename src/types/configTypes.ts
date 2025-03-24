@@ -1,8 +1,7 @@
-
-// 리스트 컬럼
-export interface Column {
-    field: string;
-    headerName: string;
+// 페이지 헤더 설정
+export interface PageHeaderConfig {
+    title: string;
+    buttons: ButtonConfig[];
 }
 
 // 버튼 설정
@@ -11,7 +10,18 @@ export interface ButtonConfig {
     url: string;
 }
 
-// 검색 필드
+// 테이블 설정
+export interface TableConfig {
+    existCheckbox: boolean;
+    columns: ColumnConfig[];
+}
+
+export interface ColumnConfig {
+    field: string;
+    headerName: string;
+}
+
+// 검색 필드 설정
 export interface SearchFieldConfig {
     name: string;
     label: string;
@@ -19,8 +29,8 @@ export interface SearchFieldConfig {
     options?: string[];
 }
 
-// 상세보기 컬럼
-export interface DetailColumn {
+// 상세보기 섹션 설정
+export interface DetailColumnConfig {
     field: string;
     headerName: string;
     width?: string;
@@ -28,9 +38,8 @@ export interface DetailColumn {
     nextRow?: boolean;
 }
 
-// 상세보기 섹션
-export interface DetailSection {
+export interface HeaderDetailConfig {
     headerWidth: string;
     header: string;
-    columns: DetailColumn[];
+    detailColumns: DetailColumnConfig[];
 }

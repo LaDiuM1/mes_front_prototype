@@ -4,7 +4,7 @@ import React from "react";
 import {useSelector} from "react-redux";
 import {RootState} from "@app/store.ts";
 
-const ContentHeader = () => {
+const PageHeader = () => {
     const title = useSelector((state: RootState) => state.title.title);
 
     return (<>
@@ -20,4 +20,4 @@ const ContentHeader = () => {
     </>)
 }
 
-export default ContentHeader;
+export default PageHeader;

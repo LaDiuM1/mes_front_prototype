@@ -5,17 +5,16 @@ import HeaderDetails from "@components/detail-list/HeaderDetails";
 import {DetailPageProps} from "src/types/commonPageTypes.ts";
 import {useParams} from "react-router-dom";
 
-const DetailList = ({title, buttons, detailColumns, apiUrl}: DetailPageProps) => {
-    usePageSetup({title, buttons});
+const DetailList = ({pageHeader, headerDetails, apiUrl}: DetailPageProps) => {
+    usePageSetup({pageHeader});
     const {id} = useParams();
 
     return (
         <>
-            <HeaderDetails detailColumns={detailColumns} apiUrl={apiUrl} id={id} />
+            <HeaderDetails headerDetails={headerDetails} apiUrl={apiUrl} id={id} />
 
             {/* 리스트 영역 */}
             <Box marginTop="16px">
-
             </Box>
         </>
     );

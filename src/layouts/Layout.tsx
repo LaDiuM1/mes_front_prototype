@@ -1,12 +1,9 @@
-import {Box, Typography} from "@mui/material";
+import {Box} from "@mui/material";
 import Sidebar from "@layouts/Sidebar.tsx";
 import Header from "@layouts/Header.tsx";
 import {Outlet} from "react-router-dom";
 import React from "react";
-import {useSelector} from "react-redux";
-import {RootState} from "@app/store.ts";
-import Buttons from "@components/items/Buttons.tsx";
-import ContentHeader from "@layouts/ContentHeader.tsx";
+import PageHeader from "@layouts/PageHeader.tsx";
 
 const styles = {
     root: {
@@ -69,14 +66,14 @@ const Layout = () => {
                     {/* 사이드바 */}
                     <Sidebar />
 
-                    {/* 메인 */}
+                    {/* 페이지 영역 */}
                     <Box sx={styles.main}>
-                        {/* 메인 헤더 */}
+                        {/* 페이지 헤더 */}
                         <Box sx={styles.mainHeader}>
-                            <ContentHeader />
+                            <PageHeader />
                         </Box>
 
-                        {/* 메인 콘텐츠 */}
+                        {/* 페이지 콘텐츠 */}
                         <Box sx={styles.mainContent}>
                             <Outlet />
                         </Box>

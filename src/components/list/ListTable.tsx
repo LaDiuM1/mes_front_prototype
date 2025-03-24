@@ -9,10 +9,8 @@ import TableRow from '@mui/material/TableRow';
 import {Checkbox} from "@mui/material";
 import {ListTableProps} from 'src/types/commonPageTypes.ts';
 import {useNavigate} from "react-router-dom";
-import listTableStyles from "@components/list/listTableStyle.ts"
 
-
-const ListTable = ({ columns, apiUrl }: ListTableProps) => {
+const ListTable = ({ table, apiUrl } : ListTableProps) => {
     const navigate = useNavigate();
     const [data, setData] = useState<any[]>([]);
     const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
@@ -51,17 +49,19 @@ const ListTable = ({ columns, apiUrl }: ListTableProps) => {
 
     return (
         <TableContainer>
-            <Table sx={listTableStyles.table} stickyHeader size="small">
+            <Table sx={styles.table} stickyHeader size="medium">
                 <TableHead>
                     <TableRow>
-                        <TableCell sx={listTableStyles.checkboxCell}>
-                            <Checkbox
-                                checked={isAllChecked}
-                                indeterminate={!isAllChecked && selectedIds.size > 0}
-                                onChange={toggleSelectAll}
-                            />
-                        </TableCell>
-                        {columns.map(col => (
+                        {table.existCheckbox &&
+                            <TableCell sx={styles.checkboxCell}>
+                                <Checkbox
+                                    checked={isAllChecked}
+                                    indeterminate={!isAllChecked && selectedIds.size > 0}
+                                    onChange={toggleSelectAll}
+                                />
+                            </TableCell>
+                        }
+                        {table.columns.map(col => (
                             <TableCell key={col.field} align="left">{col.headerName}</TableCell>
                         ))}
                     </TableRow>
@@ -70,7 +70,7 @@ const ListTable = ({ columns, apiUrl }: ListTableProps) => {
                     {data.map((row) => (
                         <TableRow
                             key={row.id}
-                            sx={listTableStyles.tableRow}
+                            sx={styles.tableRow}
                             onClick={(e) => {
                                 const target = e.target as HTMLElement;
                                 if (!target.closest('input[type="checkbox"]')) {
@@ -79,13 +79,15 @@ const ListTable = ({ columns, apiUrl }: ListTableProps) => {
                             }}
                             hover
                         >
-                            <TableCell sx={listTableStyles.checkboxCell}>
-                                <Checkbox
-                                    checked={selectedIds.has(row.id)}
-                                    onChange={() => toggleSelect(row.id)}
-                                />
-                            </TableCell>
-                            {columns.map((col) => (
+                            {table.existCheckbox &&
+                                <TableCell sx={styles.checkboxCell}>
+                                    <Checkbox
+                                        checked={selectedIds.has(row.id)}
+                                        onChange={() => toggleSelect(row.id)}
+                                    />
+                                </TableCell>
+                            }
+                            {table.columns.map((col) => (
                                 <TableCell key={col.field} align="left">
                                     {row[col.field]}
                                 </TableCell>
@@ -96,6 +98,21 @@ const ListTable = ({ columns, apiUrl }: ListTableProps) => {
             </Table>
         </TableContainer>
     );
+};
+
+const styles = {
+    table: {
+        minWidth: 800,
+    }, tableRow: {
+        cursor: 'pointer',
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }, checkboxCell: {
+        textAlign: 'center',
+        padding: '8px',
+        width: '50px',
+    },
 };
 
 const userListMockData = [

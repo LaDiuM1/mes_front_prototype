@@ -1,38 +1,50 @@
-import {HeaderDetailConfig, PageHeaderConfig, SearchFieldConfig, TableConfig} from './configTypes';
+import {HeaderDetailSection, PageHeaderConfig, SearchField, TableConfig} from './configTypes';
 
-/* 리스트 영역 */
+// ==============================
 // 리스트 페이지 Props
+// ==============================
+
 export interface ListPageProps {
     pageHeader: PageHeaderConfig;
-    searchFields: SearchFieldConfig[];
+    searchFields: SearchField[];
     table: TableConfig;
     apiUrl: string;
 }
-// 리스트 테이블 props
+
+// ==============================
+// 상세 리스트 페이지 Props
+// ==============================
+
+export interface DetailPageProps {
+    pageHeader: PageHeaderConfig;
+    headerDetails: HeaderDetailSection[];
+    table: TableConfig;
+    apiUrl: string;
+}
+
+// ==============================
+// 리스트 테이블 Props
+// ==============================
+
 export interface ListTableProps {
     table: TableConfig;
     apiUrl: string;
 }
 
-// 리스트 컨트롤 props
-export interface Props {
-    searchFields: SearchFieldConfig[];
-}
-/* 리스트 영역 END*/
+// ==============================
+// 상세 헤더 정보 Props
+// ==============================
 
-/* 상세보기 리스트 영역 */
-// 상세보기-리스트 페이지 Props
-export interface DetailPageProps {
-    pageHeader: PageHeaderConfig;
-    headerDetails: HeaderDetailConfig[];
-    table: TableConfig;
-    apiUrl: string;
-}
-
-// 상세보기-리스트 헤더 Props
 export interface HeaderDetailsProps {
-    headerDetails: HeaderDetailConfig[];
+    headerDetails: HeaderDetailSection[];
     apiUrl: string;
     id?: string;
 }
-/* 상세보기 리스트 영역 END */
+
+// ==============================
+// 검색 컨트롤 Props
+// ==============================
+
+export interface ListControlsProps {
+    searchFields: SearchField[];
+}

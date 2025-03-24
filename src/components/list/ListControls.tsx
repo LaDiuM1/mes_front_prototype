@@ -1,12 +1,12 @@
 import React from "react";
 import {Button, FormControl, MenuItem, Select, TextField} from "@mui/material";
-import {Props} from "src/types/commonPageTypes.ts";
+import {ListControlsProps} from "src/types/commonPageTypes.ts";
 
 const listInputStyle = {
     width: "130px"
 }
 
-const ListControls = ({searchFields}: Props) => {
+const ListControls = ({searchFields}: ListControlsProps) => {
     const [searchValues, setSearchValues] = React.useState<{ [key: string]: string }>({});
 
     const handleChange = (name: string, value: string) => {

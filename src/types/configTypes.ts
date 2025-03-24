@@ -1,44 +1,57 @@
-// 페이지 헤더 설정
-export interface PageHeaderConfig {
-    title: string;
-    buttons: ButtonConfig[];
-}
+// ==============================
+// 페이지 헤더 구성
+// ==============================
 
-// 버튼 설정
-export interface ButtonConfig {
+export interface PageHeaderButton {
     type: string;
     url: string;
 }
 
-// 테이블 설정
-export interface TableConfig {
-    existCheckbox: boolean;
-    columns: ColumnConfig[];
+export interface PageHeaderConfig {
+    title: string;
+    buttons: PageHeaderButton[];
 }
 
-export interface ColumnConfig {
+// ==============================
+// 검색 필드 구성
+// ==============================
+
+export type SearchFieldType = 'text' | 'select' | 'date' | 'datetime';
+
+export interface SearchField {
+    name: string;
+    label: string;
+    type: SearchFieldType;
+    options?: string[];
+}
+
+// ==============================
+// 테이블 구성
+// ==============================
+
+export interface TableColumn {
     field: string;
     headerName: string;
 }
 
-// 검색 필드 설정
-export interface SearchFieldConfig {
-    name: string;
-    label: string;
-    type: 'text' | 'select';
-    options?: string[];
+export interface TableConfig {
+    existCheckbox?: boolean;
+    columns: TableColumn[];
 }
 
-// 상세보기 섹션 설정
+// ==============================
+// 상세 정보(HeaderDetails) 구성
+// ==============================
+
 export interface DetailColumnConfig {
     field: string;
     headerName: string;
     width?: string;
-    colSpan?: number;
     nextRow?: boolean;
+    colSpan?: number;
 }
 
-export interface HeaderDetailConfig {
+export interface HeaderDetailSection {
     headerWidth: string;
     header: string;
     detailColumns: DetailColumnConfig[];

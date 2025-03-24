@@ -31,7 +31,6 @@ const userListConfig = {
 };
 
 const UserListPage = () => {
-    // @ts-ignore
     return <List {...userListConfig} />;
 };
 

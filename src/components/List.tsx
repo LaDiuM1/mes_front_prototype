@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import ListTable from '@components/list/ListTable.tsx';
+import ListTable from '@components/items/ListTable.tsx';
 import ListPagination from '@components/list/ListPagination.tsx';
 import ListControls from '@components/list/ListControls.tsx';
 import { usePageSetup } from '@hooks/usePageSetup.ts';
